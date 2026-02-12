@@ -54,3 +54,17 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Package manager lock files (keep pnpm-lock.yaml)
+package-lock.json
+yarn.lock
+
+# Prisma
+# migrations folder should typically be committed
+# but you can uncomment this if you want to ignore it:
+# /prisma/migrations
+
+# Docker
+docker/postgres/data
+*.sql.gz
+backup*.sql

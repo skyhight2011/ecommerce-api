@@ -1,0 +1,42 @@
+services:
+  # Development App Service (Optional)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: ecommerce-api-dev
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-ecommerce_db}?schema=public
+      PORT: 3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/dist
+    networks:
+      - ecommerce-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: pnpm run start:dev
+
+  postgres:
+    extends:
+      file: docker-compose.yml
+      service: postgres
+
+  pgadmin:
+    extends:
+      file: docker-compose.yml
+      service: pgadmin
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+
+networks:
+  ecommerce-network:
+    driver: bridge
