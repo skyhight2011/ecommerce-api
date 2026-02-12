@@ -1,0 +1,81 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Dev Server",
+      "type": "shell",
+      "command": "pnpm run start:dev",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "runOptions": {
+        "runOn": "default"
+      }
+    },
+    {
+      "label": "Build",
+      "type": "shell",
+      "command": "pnpm run build",
+      "problemMatcher": ["$tsc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Test",
+      "type": "shell",
+      "command": "pnpm run test",
+      "problemMatcher": [],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Lint",
+      "type": "shell",
+      "command": "pnpm run lint",
+      "problemMatcher": ["$eslint-stylish"]
+    },
+    {
+      "label": "Format",
+      "type": "shell",
+      "command": "pnpm run format",
+      "problemMatcher": []
+    },
+    {
+      "label": "Prisma Generate",
+      "type": "shell",
+      "command": "pnpm run prisma:generate",
+      "problemMatcher": []
+    },
+    {
+      "label": "Prisma Migrate",
+      "type": "shell",
+      "command": "pnpm run prisma:migrate",
+      "problemMatcher": []
+    },
+    {
+      "label": "Prisma Studio",
+      "type": "shell",
+      "command": "pnpm run prisma:studio",
+      "problemMatcher": [],
+      "isBackground": true
+    },
+    {
+      "label": "Docker Up",
+      "type": "shell",
+      "command": "pnpm run docker:up",
+      "problemMatcher": []
+    },
+    {
+      "label": "Docker Down",
+      "type": "shell",
+      "command": "pnpm run docker:down",
+      "problemMatcher": []
+    }
+  ]
+}

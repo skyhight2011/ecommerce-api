@@ -1,98 +1,342 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# E-Commerce API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A production-ready E-Commerce REST API built with NestJS, Prisma, PostgreSQL, and JWT authentication.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Features
 
-## Description
+- ✅ **JWT Authentication** - Secure authentication with access tokens
+- ✅ **Role-Based Access Control** - ADMIN, SELLER, and CUSTOMER roles
+- ✅ **Prisma ORM** - Type-safe database access with PostgreSQL
+- ✅ **Docker Support** - PostgreSQL and pgAdmin containers
+- ✅ **Swagger Documentation** - Interactive API documentation
+- ✅ **Input Validation** - Request validation with class-validator
+- ✅ **Password Hashing** - Secure password storage with bcrypt
+- ✅ **Global Guards** - Automatic authentication on all routes
+- ✅ **Public Routes** - Easy decorator for public endpoints
+- ✅ **Production Ready** - Built with best practices and security in mind
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 📋 Prerequisites
 
-## Project setup
+- Node.js 20+ (use `fnm` or `nvm` to manage versions)
+- Docker and Docker Compose
+- pnpm (or npm)
 
+## 🎯 Quick Start
+
+### 1. Install Dependencies
 ```bash
-$ pnpm install
+pnpm install
 ```
 
-## Compile and run the project
-
+### 2. Setup Environment
 ```bash
-# development
-$ pnpm run start
+# Copy .env.example to .env
+cp .env.example .env
 
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+# Update JWT_SECRET in .env with a strong secret
 ```
 
-## Run tests
-
+### 3. Start Database
 ```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+pnpm run docker:up
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+### 4. Setup Database
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+# Generate Prisma Client
+pnpm run prisma:generate
+
+# Run migrations
+pnpm run prisma:migrate
+
+# Seed database (optional)
+pnpm run prisma:seed
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 5. Start Application
+```bash
+# Development mode with hot reload
+pnpm run start:dev
 
-## Resources
+# Production mode
+pnpm run build
+pnpm run start:prod
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+### 6. Test Authentication
+```bash
+# Run automated test script
+./test-auth.sh
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# Or access Swagger UI
+open http://localhost:3000/api
+```
 
-## Support
+## 📚 Documentation
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **[Quick Start Guide](QUICK_START.md)** - Get up and running in 3 minutes
+- **[Authentication Guide](AUTH_GUIDE.md)** - Complete auth implementation guide
+- **[Authentication Setup](AUTHENTICATION_SETUP_COMPLETE.md)** - Detailed setup documentation
+- **[Docker Setup](DOCKER_SETUP.md)** - Docker configuration and usage
+- **[Prisma Documentation](README.prisma.md)** - Database and Prisma guide
 
-## Stay in touch
+## 🔐 Authentication
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+The API uses JWT tokens for authentication. All routes are protected by default.
 
-## License
+### Register
+```bash
+POST /auth/register
+{
+  "email": "user@example.com",
+  "password": "Test123!",
+  "firstName": "John",
+  "lastName": "Doe"
+}
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Login
+```bash
+POST /auth/login
+{
+  "email": "user@example.com",
+  "password": "Test123!"
+}
+```
+
+### Use Token
+```bash
+GET /auth/profile
+Authorization: Bearer YOUR_JWT_TOKEN
+```
+
+## 🎭 User Roles
+
+- **CUSTOMER** (default) - Can browse products, create orders
+- **SELLER** - Can manage products
+- **ADMIN** - Full system access
+
+## 📦 API Endpoints
+
+### Public Routes
+- `GET /` - Health check
+- `GET /health` - Detailed health status
+- `POST /auth/register` - User registration
+- `POST /auth/login` - User login
+- `GET /products` - List products
+- `GET /products/:id` - Get product details
+
+### Protected Routes
+- `GET /auth/profile` - Current user profile
+- `GET /users/:id` - Get user
+- `PATCH /users/:id` - Update user
+
+### Admin Routes
+- `GET /users` - List all users
+- `POST /users` - Create user
+- `DELETE /users/:id` - Delete user
+- `DELETE /products/:id` - Delete product
+
+### Admin/Seller Routes
+- `POST /products` - Create product
+- `PATCH /products/:id` - Update product
+
+## 🛠️ Development
+
+### Available Scripts
+
+```bash
+# Development
+pnpm run start:dev         # Start with hot reload
+pnpm run build             # Build for production
+pnpm run start:prod        # Start production server
+
+# Database
+pnpm run prisma:generate   # Generate Prisma Client
+pnpm run prisma:migrate    # Run migrations
+pnpm run prisma:studio     # Open Prisma Studio
+pnpm run prisma:seed       # Seed database
+pnpm run prisma:push       # Push schema changes
+pnpm run prisma:pull       # Pull schema from database
+
+# Docker
+pnpm run docker:up         # Start containers
+pnpm run docker:down       # Stop containers
+pnpm run docker:logs       # View logs
+pnpm run docker:clean      # Remove volumes
+
+# Testing
+pnpm run test              # Unit tests
+pnpm run test:e2e          # E2E tests
+pnpm run test:cov          # Test coverage
+./test-auth.sh             # Auth integration tests
+```
+
+### Project Structure
+
+```
+src/
+├── auth/                  # Authentication module
+│   ├── decorators/        # Custom decorators (@Public, @Roles, @CurrentUser)
+│   ├── dto/               # Data transfer objects
+│   ├── guards/            # Auth guards (JWT, Roles)
+│   ├── strategies/        # Passport strategies
+│   └── auth.service.ts    # Auth business logic
+├── users/                 # Users module
+│   ├── dto/               # User DTOs
+│   ├── entities/          # User entity
+│   └── users.service.ts   # User business logic
+├── products/              # Products module
+│   ├── dto/               # Product DTOs
+│   ├── entities/          # Product entity
+│   └── products.service.ts # Product business logic
+├── prisma/                # Prisma module
+│   └── prisma.service.ts  # Prisma service
+├── common/                # Shared utilities
+│   └── dto/               # Common DTOs
+└── app.module.ts          # Main application module
+
+prisma/
+├── schema.prisma          # Database schema
+├── migrations/            # Database migrations
+└── seed.ts                # Database seeding script
+```
+
+## 🐳 Docker
+
+The project includes Docker configuration for PostgreSQL and pgAdmin.
+
+```bash
+# Start all services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+
+# Clean up (removes volumes)
+docker-compose down -v
+```
+
+Access pgAdmin at http://localhost:5050 (admin@admin.com / admin)
+
+## 📊 Database
+
+### Prisma Studio
+```bash
+pnpm run prisma:studio
+```
+
+Access at http://localhost:5555
+
+### Direct PostgreSQL Access
+```bash
+docker exec -it ecommerce-postgres psql -U postgres -d ecommerce_db
+```
+
+## 🔒 Security
+
+- JWT tokens for authentication
+- Bcrypt password hashing (10 rounds)
+- Input validation on all requests
+- Never exposes passwords in responses
+- Role-based authorization
+- CORS enabled
+- User status checking
+
+## 🧪 Testing
+
+```bash
+# Run authentication tests
+./test-auth.sh
+
+# Unit tests
+pnpm run test
+
+# E2E tests
+pnpm run test:e2e
+
+# Test coverage
+pnpm run test:cov
+```
+
+## 📖 API Documentation
+
+Interactive API documentation is available at:
+- **Swagger UI**: http://localhost:3000/api
+
+Features:
+- Try endpoints directly from the browser
+- Bearer token authentication
+- Request/response schemas
+- Example payloads
+
+## 🚀 Deployment
+
+### Build
+```bash
+pnpm run build
+```
+
+### Environment Variables
+```env
+NODE_ENV=production
+PORT=3000
+DATABASE_URL=your-production-database-url
+JWT_SECRET=your-production-secret-key
+JWT_EXPIRES_IN=7d
+```
+
+### Run Production
+```bash
+pnpm run start:prod
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## 📝 License
+
+This project is [MIT licensed](LICENSE).
+
+## 🔗 Resources
+
+- [NestJS Documentation](https://docs.nestjs.com)
+- [Prisma Documentation](https://www.prisma.io/docs)
+- [PostgreSQL Documentation](https://www.postgresql.org/docs)
+- [JWT Documentation](https://jwt.io)
+- [Passport.js](https://www.passportjs.org)
+
+## 👥 Support
+
+For questions and support:
+- Check the documentation files
+- Open an issue on GitHub
+- Review the Swagger documentation
+
+## 📈 Roadmap
+
+- [ ] Refresh tokens
+- [ ] Email verification
+- [ ] Password reset
+- [ ] Rate limiting
+- [ ] Two-factor authentication
+- [ ] OAuth integration
+- [ ] Order management
+- [ ] Shopping cart
+- [ ] Payment integration
+- [ ] Email notifications
+- [ ] File upload (product images)
+- [ ] Search and filtering
+- [ ] Caching with Redis
+
+---
+
+Built with ❤️ using [NestJS](https://nestjs.com)

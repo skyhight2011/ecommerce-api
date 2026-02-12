@@ -1,0 +1,139 @@
+# E-Commerce API - Cursor Rules
+
+## Project Context
+This is a NestJS-based E-Commerce API with:
+- JWT authentication
+- Role-based access control (ADMIN, SELLER, CUSTOMER)
+- Prisma ORM with PostgreSQL
+- Docker support
+- Comprehensive Swagger documentation
+
+## Code Style & Conventions
+
+### TypeScript
+- Use strict TypeScript configuration
+- Prefer interfaces over types for object shapes
+- Use enums for fixed sets of values
+- Always type function parameters and return types
+- Use `!` assertion for properties that are definitely assigned
+
+### NestJS Patterns
+- Use dependency injection
+- Follow module-per-feature pattern
+- Use DTOs for all request/response data
+- Apply validation decorators on all DTOs
+- Use entities for database models
+- Apply guards at controller level when possible
+
+### Authentication
+- All routes are protected by default via global JWT guard
+- Use `@Public()` decorator for public routes
+- Use `@Roles(...roles)` for role-based access
+- Use `@CurrentUser()` to access authenticated user
+- Never expose passwords in responses
+
+### Database
+- Use Prisma for all database operations
+- Define models in `prisma/schema.prisma`
+- Use transactions for multi-step operations
+- Include relations when needed
+- Use soft deletes (status = 'DELETED') instead of hard deletes
+
+### API Design
+- Follow RESTful conventions
+- Use proper HTTP status codes
+- Include Swagger decorators on all endpoints
+- Use pagination for list endpoints
+- Return consistent response formats
+
+### Error Handling
+- Use NestJS built-in exceptions
+- Provide meaningful error messages
+- Don't expose sensitive information in errors
+- Log errors appropriately
+
+### Security
+- Hash all passwords with bcrypt
+- Validate all user inputs
+- Use parameterized queries (Prisma handles this)
+- Never log sensitive data
+- Use environment variables for secrets
+
+## File Structure
+```
+src/
+├── auth/              # Authentication logic
+├── users/             # User management
+├── products/          # Product management
+├── orders/            # Order management (to be added)
+├── common/            # Shared utilities
+└── prisma/            # Prisma service
+
+prisma/
+├── schema.prisma      # Database schema
+├── migrations/        # Migration files
+└── seed.ts            # Seeding script
+```
+
+## Common Commands
+```bash
+# Development
+pnpm run start:dev
+
+# Database
+pnpm run prisma:generate
+pnpm run prisma:migrate
+pnpm run prisma:studio
+
+# Testing
+./test-auth.sh
+pnpm run test
+```
+
+## When Creating New Modules
+
+1. Create module directory in `src/`
+2. Create DTOs with validation decorators
+3. Create entity (if needed)
+4. Create service with business logic
+5. Create controller with Swagger docs
+6. Apply guards and decorators
+7. Register module in `app.module.ts`
+8. Test endpoints via Swagger UI
+
+## Example Controller Template
+```typescript
+import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { Public } from '../auth/decorators/public.decorator';
+
+@ApiTags('Resource')
+@Controller('resource')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@ApiBearerAuth()
+export class ResourceController {
+  @Get()
+  @Public()
+  @ApiOperation({ summary: 'Get all resources' })
+  findAll() {
+    return [];
+  }
+
+  @Post()
+  @Roles('ADMIN')
+  @ApiOperation({ summary: 'Create resource (Admin only)' })
+  create(@Body() dto: CreateResourceDto, @CurrentUser('id') userId: string) {
+    return {};
+  }
+}
+```
+
+## Documentation
+- Update Swagger docs when adding/changing endpoints
+- Keep README.md up to date
+- Document complex business logic
+- Add JSDoc comments for public APIs
